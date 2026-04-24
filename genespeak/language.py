@@ -6,7 +6,7 @@ class Language:
 	operators: dict = {}
 	setters: dict = {}
 	constructs: dict = {}
-	terminals: dict = {'open':'(', 'close':')', 'sep':' '}
+	terminals: dict = {}
 
 	def copy(self, other):
 		self.dtypes = other.dtypes
@@ -16,19 +16,6 @@ class Language:
 		self.terminals = other.terminals
 		return self
 
-	def get_type(self, obj, context={}):
-		if type(obj).__module__ != 'builtins':
-			if obj['id'] in self.operators:
-				op = self.operators[obj['id']]
-				return op['dtype']
-		else:
-			if isinstance(obj, str):
-				return self.get_type(context[obj], context)
-			else:
-				for i in self.dtypes:
-					if isinstance(obj, tuple(self.dtypes[i])):
-						return i
-
 	def load(filename):
 		lang = Language()
 
@@ -36,6 +23,7 @@ class Language:
 		data = json.load(f)
 
 		dtypes = data['dtypes']
+		terminals = data['terminals']
 		context = data['context']
 		setters = data['setters']
 		operators = data['operators']
@@ -53,6 +41,7 @@ class Language:
 				dtypes[i][j] = eval(dtypes[i][j], locals=locals)
 
 		lang.dtypes = dtypes
+		lang.terminals = terminals
 
 		for operator in operators:
 			id = operator['id']

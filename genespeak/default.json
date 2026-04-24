@@ -1,168 +1,141 @@
 {
-	"context": [],
-
-    "terminals": {
-        "open": "(",
-        "close": ")",
-        "sep": " "
-    },
-
+    "context": [],
+    
+    "terminals": {"open": "(", "close": ")", "sep": " "},
+	
     "dtypes": {
-        "numeric": ["int", "float", "bool"],
-        "boolean": ["bool"],
-        "composite": []
-    },
+        "numeric":   ["int", "float", "bool"],
+        "boolean":   ["bool"],
+        "composite": []},
 
     "operators": [
         {
-            "id": "&",
-            "name": "and",
-            "dtype": "boolean",
-            "arity": [2,null],
-            "input": "boolean",
-            "function": "lambda a,b: a and b"
-        },
+            "id":       "&",
+            "name":     "and",
+            "arity":    [2,null],
+            "dtype":    "boolean",
+            "input":    "boolean",
+            "function": "lambda a,b: a and b"},
         {
-            "id": "||",
-            "name": "or",
-            "dtype": "boolean",
-            "arity": [2,null],
-            "input": "boolean",
-            "function": "lambda a,b: a or b"
-        },
+            "id":       "||",
+            "name":     "or",
+            "arity":    [2,null],
+            "dtype":    "boolean",
+            "input":    "boolean",
+            "function": "lambda a,b: a or b"},
         {
-            "id": ">",
-            "name": "gt",
-            "dtype": "boolean",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a > b"
-        },
+            "id":       ">",
+            "name":     "gt",
+            "arity":    [2,null],
+            "dtype":    "boolean",
+            "input":    "numeric",
+            "function": "lambda a,b: a > b"},
         {
-            "id": "<",
-            "name": "lt",
-            "dtype": "boolean",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a < b"
-        },
+            "id":       "<",
+            "name":     "lt",
+            "arity":    [2,null],
+            "dtype":    "boolean",
+            "input":    "numeric",
+            "function": "lambda a,b: a < b"},
         {
-            "id": ">=",
-            "name": "gte",
-            "dtype": "boolean",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a >= b"
-        },
+            "id":       ">=",
+            "name":     "gte",
+            "arity":    [2,null],
+            "dtype":    "boolean",
+            "input":    "numeric",
+            "function": "lambda a,b: a >= b"},
         {
-            "id": "<=",
-            "name": "lte",
-            "dtype": "boolean",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a <= b"
-        },
+            "id":       "<=",
+            "name":     "lte",
+            "arity":    [2,null],
+            "dtype":    "boolean",
+            "input":    "numeric",
+            "function": "lambda a,b: a <= b"},
         {
-            "id": "!=",
-            "name": "ne",
-            "dtype": "boolean",
-            "arity": [2,null],
-            "function": "lambda a,b: a != b"
-        },
+            "id":       "!=",
+            "name":     "ne",
+            "arity":    [2,null],
+            "dtype":    "boolean",
+            "function": "lambda a,b: a != b"},
         {
-        	"id": "==",
-        	"name": "eq",
-        	"dtype": "boolean",
-        	"arity": [2,null],
-            "input": "numeric",
-        	"function": "lambda a,b: a == b"
-        },
+        	"id":       "==",
+        	"name":     "eq",
+        	"arity":    [2,null],
+        	"dtype":    "boolean",
+            "input":    "numeric",
+        	"function": "lambda a,b: a == b"},
         {
-            "id": "+",
-            "name": "add",
-            "dtype": "numeric",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a + b"
-        },
+            "id":       "+",
+            "name":     "add",
+            "arity":    [2,null],
+            "dtype":    "numeric",
+            "input":    "numeric",
+            "function": "lambda a,b: a + b"},
         {
-            "id": "-",
-            "name": "sub",
-            "dtype": "numeric",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a - b"
-        },
+            "id":       "-",
+            "name":     "sub",
+            "arity":    [2,null],
+            "dtype":    "numeric",
+            "input":    "numeric",
+            "function": "lambda a,b: a - b"},
         {
-            "id": "*",
-            "name": "mul",
-            "dtype": "numeric",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a * b"
-        },
+            "id":       "*",
+            "name":     "mul",
+            "arity":    [2,null],
+            "dtype":    "numeric",
+            "input":    "numeric",
+            "function": "lambda a,b: a * b"},
         {
-            "id": "/",
-            "name": "div",
-            "dtype": "numeric",
-            "arity": [2,null],
-            "input": "numeric",
-            "function": "lambda a,b: a / b"
-        }
-    ],
+            "id":       "/",
+            "name":     "div",
+            "arity":    [2,null],
+            "dtype":    "numeric",
+            "input":    "numeric",
+            "function": "lambda a,b: a / b"}],
 
     "setters": [
         {
-            "id": "=",
-            "name": "assign",
-            "dtype": "composite",
-            "function": "lambda X,a,b: X.__setitem__(a,b)"
-        },
+            "id":       "=",
+            "name":     "assign",
+            "arity":    2,
+            "dtype":    "composite",
+            "function": "lambda X,a,b: X.__setitem__(a,b)"},
         {
-            "id": "+=",
-            "name": "assign-add",
-            "dtype": "composite",
-            "function": "lambda X,a,b: X.__setitem__(a,X[a]+b)"
-        },
+            "id":       "+=",
+            "name":     "assign-add",
+            "arity":    2,
+            "dtype":    "composite",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]+b)"},
         {
-            "id": "-=",
-            "name": "assign-sub",
-            "dtype": "composite",
-            "function": "lambda X,a,b: X.__setitem__(a,X[a]-b)"
-        },
+            "id":       "-=",
+            "name":     "assign-sub",
+            "arity":    2,
+            "dtype":    "composite",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]-b)"},
         {
-            "id": "*=",
-            "name": "assign-mul",
-            "dtype": "composite",
-            "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"
-        },
+            "id":       "*=",
+            "name":     "assign-mul",
+            "arity":    2,
+            "dtype":    "composite",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"},
         {
-            "id": "/=",
-            "name": "assign-div",
-            "dtype": "composite",
-            "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"
-        }
-    ],
+            "id":       "/=",
+            "name":     "assign-div",
+            "arity":    2,
+            "dtype":    "composite",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"}],
 
     "constructs": [
         {
-            "id": "=>",
-            "name": "rule",
+            "id":    "=>",
+            "name":  "rule",
+            "arity":  2,
             "dtype": "composite",
-            "size": 2,
-            "children": [
-                {"label": "condition", "dtype": "boolean"},
-                {"label": "action", "dtype": "composite"}
-            ]
-        },
-        
+            "input": ["boolean", "composite"]},
         {
-            "id": ",",
-            "name": "sequence",
+            "id":    ",",
+            "name":  "sequence",
+            "arity": [2,null],
             "dtype": "composite",
-            "size": [2,null],
-            "children": {"dtype": "composite"}
-        }
-    ]
-
+            "input": "composite"}]
 }
