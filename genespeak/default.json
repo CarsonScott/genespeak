@@ -1,0 +1,145 @@
+{
+	"context": [],
+
+    "dtypes": {
+        "numeric": ["int", "float", "bool"],
+        "boolean": ["bool"]
+    },
+
+    "operators": [
+        {
+            "id": "&",
+            "name": "and",
+            "dtype": "boolean",
+            "arity": [2,null],
+            "input": "boolean",
+            "function": "lambda a,b: a and b"
+        },
+        {
+            "id": "||",
+            "name": "or",
+            "dtype": "boolean",
+            "arity": [2,null],
+            "input": "boolean",
+            "function": "lambda a,b: a or b"
+        },
+        {
+            "id": ">",
+            "name": "gt",
+            "dtype": "boolean",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a > b"
+        },
+        {
+            "id": "<",
+            "name": "lt",
+            "dtype": "boolean",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a < b"
+        },
+        {
+            "id": ">=",
+            "name": "gte",
+            "dtype": "boolean",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a >= b"
+        },
+        {
+            "id": "<=",
+            "name": "lte",
+            "dtype": "boolean",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a <= b"
+        },
+        {
+            "id": "!=",
+            "name": "ne",
+            "dtype": "boolean",
+            "arity": [2,null],
+            "function": "lambda a,b: a != b"
+        },
+        {
+        	"id": "==",
+        	"name": "eq",
+        	"dtype": "boolean",
+        	"arity": [2,null],
+            "input": "numeric",
+        	"function": "lambda a,b: a == b"
+        },
+        {
+            "id": "+",
+            "name": "add",
+            "dtype": "numeric",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a + b"
+        },
+        {
+            "id": "-",
+            "name": "sub",
+            "dtype": "numeric",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a - b"
+        },
+        {
+            "id": "*",
+            "name": "mul",
+            "dtype": "numeric",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a * b"
+        },
+        {
+            "id": "/",
+            "name": "div",
+            "dtype": "numeric",
+            "arity": [2,null],
+            "input": "numeric",
+            "function": "lambda a,b: a / b"
+        }
+    ],
+
+    "setters": [
+        {
+            "id": "=",
+            "name": "assign",
+            "function": "lambda X,a,b: X.__setitem__(a,b)"
+        },
+        {
+            "id": "+=",
+            "name": "assign-add",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]+b)"
+        },
+        {
+            "id": "-=",
+            "name": "assign-sub",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]-b)"
+        },
+        {
+            "id": "*=",
+            "name": "assign-mul",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"
+        },
+        {
+            "id": "/=",
+            "name": "assign-div",
+            "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"
+        }
+    ],
+
+    "connectors": [
+        {
+            "id": "=>",
+            "name": "rule"
+        },
+        {
+            "id": ",",
+            "name": "sequence"
+        }
+    ]
+}
