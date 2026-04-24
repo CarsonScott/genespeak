@@ -1,18 +1,91 @@
-from .util import *
-from .operation import Operation, convert
-from .language import Language
+from .util import LANGUAGE, set_language
+from .operation import Operation
 
-_directory = os.path.dirname(os.path.abspath(__file__))
-_lang_path = os.path.join(_directory, 'default.json')
+def convert(tree: list)-> Operation:
+  ''' 
+    Converts a parse tree into an operation.
+  '''
+  if isinstance(tree, list):
+    if len(tree) > 0:
+      head = tree[0]
+      data = tree[1:]
+      for i in range(len(data)):
+        x = data[i]
+        if isinstance(x, list):
+          data[i] = convert(x)
+      return Operation(head, data)
 
-LANGUAGE = Language.load(_lang_path)
+def validate(operation: Operation, context: dict)-> bool:
+  '''
+    Checks the validity of an operation in a given context.
+  '''
+  if isinstance(operation, list):
+    operation = convert(operation)
 
-def execute(*args, **kwargs):
-  return LANGUAGE.execute(*args, **kwargs)
+  head = operation.head
+  data = operation.data
 
-def validate(*args, **kwargs):
-  return LANGUAGE.validate(*args, **kwargs)
+  if head in LANGUAGE.operators:
+    op = LANGUAGE.operators[head]
+    arity = op['arity']
 
+    if arity is not None:
+      if isinstance(arity, list): low, high = arity
+      else: low, high = arity, arity
+      if (low is None or len(data) >= low) and (high is None or len(data) <= high):
+        for i in range(len(data)):
+          type = LANGUAGE.get_type(data[i], context)
+          if type != op['input']:
+            return False
+        return True
+    else: return True
+  return False
+
+def execute(operation: Operation, context: dict):
+  '''
+    Executes an operation in a given context.
+  '''
+  if isinstance(operation, list): 
+    operation = convert(operation)
+
+  op = operation.head
+
+  if op in LANGUAGE.operators or op in LANGUAGE.setters:
+    inputs = []
+    for i in range(len(operation.data)):
+      child = operation.data[i]
+      if op not in LANGUAGE.setters or i > 0:
+        if isinstance(child, Operation):
+          child = execute(child, context)
+        elif isinstance(child, str):
+          if child.isnumeric():
+            if child.isdecimal():
+              child = float(child)
+            else: child = int(child)
+          else: child = context[child]
+      inputs.append(child)
+
+    if op in LANGUAGE.setters:
+      func = LANGUAGE.setters[op]['function']
+      return func(context, *inputs)
+    else: 
+      func = LANGUAGE.operators[op]['function']
+      return func(inputs)
+
+  elif op in LANGUAGE.constructs:
+    construct = LANGUAGE.constructs[op]
+
+    if construct['name'] == 'rule':
+      condition, action = operation.data
+      if execute(condition, context):
+        execute(action, context)
+        return True
+      return False
+
+    elif construct['name'] == 'sequence':
+      for action in operation.data:
+        execute(action, context)
+      return True
 
 '''
 Low-Level Constructs:
@@ -36,7 +109,7 @@ of matter and energy.
 
 Selectors are different in that they search for a singular valid task in response to a given state.
 Whatever task responds first to a given state is selected for execution, effectively halting the 
-search for alternatives. The selector thus reinforces itself when a single task becomes active
+search for alternatives. The selector thus reinforces itLANGUAGE when a single task becomes active
 from its set of possibilities.
 
 Selectors containing all production-rules function exactly like chains of if-then-else statements.
@@ -51,7 +124,7 @@ directly to expressions/statements.
   This keeps genetic constructs alive that "justify" their own existence by paying off their "debt"
   faster than they can be destroyed. 
 
-  If a construct is unable to generate enough energy to sustain itself over a period of time (or if
+  If a construct is unable to generate enough energy to sustain itLANGUAGE over a period of time (or if
   the context in which it is active does not provide enough support), it decays into "precursors", or 
   non-functional physical components, and any amount of energy that
   was used to maintain its structure.

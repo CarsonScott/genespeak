@@ -1,9 +1,16 @@
 {
 	"context": [],
 
+    "terminals": {
+        "open": "(",
+        "close": ")",
+        "sep": " "
+    },
+
     "dtypes": {
         "numeric": ["int", "float", "bool"],
-        "boolean": ["bool"]
+        "boolean": ["bool"],
+        "composite": []
     },
 
     "operators": [
@@ -108,38 +115,54 @@
         {
             "id": "=",
             "name": "assign",
+            "dtype": "composite",
             "function": "lambda X,a,b: X.__setitem__(a,b)"
         },
         {
             "id": "+=",
             "name": "assign-add",
+            "dtype": "composite",
             "function": "lambda X,a,b: X.__setitem__(a,X[a]+b)"
         },
         {
             "id": "-=",
             "name": "assign-sub",
+            "dtype": "composite",
             "function": "lambda X,a,b: X.__setitem__(a,X[a]-b)"
         },
         {
             "id": "*=",
             "name": "assign-mul",
+            "dtype": "composite",
             "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"
         },
         {
             "id": "/=",
             "name": "assign-div",
+            "dtype": "composite",
             "function": "lambda X,a,b: X.__setitem__(a,X[a]*b)"
         }
     ],
 
-    "connectors": [
+    "constructs": [
         {
             "id": "=>",
-            "name": "rule"
+            "name": "rule",
+            "dtype": "composite",
+            "size": 2,
+            "children": [
+                {"label": "condition", "dtype": "boolean"},
+                {"label": "action", "dtype": "composite"}
+            ]
         },
+        
         {
             "id": ",",
-            "name": "sequence"
+            "name": "sequence",
+            "dtype": "composite",
+            "size": [2,null],
+            "children": {"dtype": "composite"}
         }
     ]
+
 }

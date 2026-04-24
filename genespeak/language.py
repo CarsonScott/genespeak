@@ -1,19 +1,26 @@
-from .util import *
-from .operation import Operation, convert
+from functools import reduce
+import json
 
 class Language:
 	dtypes: dict = {}
 	operators: dict = {}
 	setters: dict = {}
-	connectors: dict = {}
+	constructs: dict = {}
+	terminals: dict = {'open':'(', 'close':')', 'sep':' '}
 
+	def copy(self, other):
+		self.dtypes = other.dtypes
+		self.operators = other.operators
+		self.setters = other.setters
+		self.constructs = other.constructs
+		self.terminals = other.terminals
+		return self
 
 	def get_type(self, obj, context={}):
-		if isinstance(obj, Operation):
+		if type(obj).__module__ != 'builtins':
 			if obj['id'] in self.operators:
 				op = self.operators[obj['id']]
-				type = op['dtype']
-				return type
+				return op['dtype']
 		else:
 			if isinstance(obj, str):
 				return self.get_type(context[obj], context)
@@ -21,78 +28,6 @@ class Language:
 				for i in self.dtypes:
 					if isinstance(obj, tuple(self.dtypes[i])):
 						return i
-
-
-	def validate(self, operation, context={}):
-		if isinstance(operation, list):
-			operation = convert(operation)
-
-		head = operation.head
-		data = operation.data
-
-		if head in self.operators:
-			op = self.operators[head]
-			arity = op['arity']
-
-			if arity is not None:
-				if isinstance(arity, list): low, high = arity
-				else: low, high = arity, arity
-				if (low is None or len(data) >= low) and (high is None or len(data) <= high):
-					for i in range(len(data)):
-						type = self.get_type(data[i], context)
-						if type != op['input']:
-							return False
-					return True
-			else: return True
-		return False
-
-
-	def execute(self, operation: Operation, context: dict):
-		'''
-			Performs an operation on a given input.
-		'''
-		if isinstance(operation, list): 
-			operation = convert(operation)
-
-		op = operation.head
-
-		if op in self.operators or op in self.setters:
-			inputs = []
-			for i in range(len(operation.data)):
-				child = operation.data[i]
-				if op not in self.setters or i > 0:
-					if isinstance(child, Operation):
-						child = self.execute(child, context)
-					elif isinstance(child, str):
-						if child.isnumeric():
-							if child.isdecimal():
-								child = float(child)
-							else: child = int(child)
-						else: child = context[child]
-				inputs.append(child)
-
-			if op in self.setters:
-				func = self.setters[op]['function']
-				return func(context, *inputs)
-			else: 
-				func = self.operators[op]['function']
-				return func(inputs)
-
-		elif op in self.connectors:
-			connector = self.connectors[op]
-
-			if connector['name'] == 'rule':
-				condition, action = operation.data
-				if self.execute(condition, context):
-					self.execute(action, context)
-					return True
-				return False
-
-			elif connector['name'] == 'sequence':
-				for action in operation.data:
-					self.execute(action, context)
-				return True
-
 
 	def load(filename):
 		lang = Language()
@@ -104,7 +39,7 @@ class Language:
 		context = data['context']
 		setters = data['setters']
 		operators = data['operators']
-		connectors = data['connectors']
+		constructs = data['constructs']
 
 		locals = {}
 
@@ -129,11 +64,11 @@ class Language:
 		for setter in setters:
 			id = setter['id']
 			f = eval(setter['function'], locals=locals)
-			setter['function'] = f		
+			setter['function'] = f
 			lang.setters[id] = setter
 
-		for connector in connectors:
-			id = connector['id']
-			lang.connectors[id] = connector
+		for construct in constructs:
+			id = construct['id']
+			lang.constructs[id] = construct
 
 		return lang
