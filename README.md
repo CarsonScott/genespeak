@@ -1,13 +1,13 @@
 # genespeak 
 ## A system for modeling real-time cellular dynamics
 
-## Genetic Language
+### Genetic Language
 
 A genome is a collection of rules represented by statements in a formal language. Each rule contains a condition-expression and an action-statement, and ensures that the action is carried out whenever the condition holds true. 
 
-Each rule in a genome has an associated energy cost that is required in order to activate it. A system is thus limited to a finite number of active rules at any given time which influences it selects rules to become active. Selection is a probabilistic process determined by the entropy of the system. Whenever a rule becomes active, energy diffuses outward to adjacent rules in the genome, making them more likely to become active. This creates local stability wherein collections of nearby rules promote the activity of one another, leading the distinct operational "states" of the system.
+Each rule in a genome has an associated energy cost that is required in order to activate it. A system is thus limited to a finite number of active rules at any given time which influences how it selects rules to activate. Selection is a probabilistic process determined by the entropy of the system. Whenever a rule becomes active, energy diffuses outward to adjacent rules in the genome, making them more likely to become active. This creates local stability wherein collections of nearby rules promote the activity of one another, leading the distinct operational "states" of the system.
 
-## Genetic Constructs
+### Genetic Constructs
 
 A construct is a set of rules that are (in some way) functionally dependent on one another. The activation of rules within a given construct depends on the exact construct type. Each type has a unique method of selecting and inhibiting rules. The basic types of constructs are as follows: 
 
