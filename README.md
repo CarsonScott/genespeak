@@ -1,7 +1,7 @@
 # genespeak 
-## A genetic language for modeling real-time cellular dynamics
+## A system for modeling real-time cellular dynamics
 
-## Formal Language
+## Genetic Language
 
 A genome is a collection of rules represented by statements in a formal language. Each rule contains a condition-expression and an action-statement, and ensures that the action is carried out whenever the condition holds true. 
 
