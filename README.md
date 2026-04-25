@@ -1,4 +1,4 @@
-# Genetic Models of Real-Time Cellular Dynamics 
+# A Genetic Language for Expressing Real-Time Cell Dynamics 
 
 ## Overview
 A genome is a collection of rules represented by statements in a formal language. Each rule contains a condition-expression and an action-statement, and ensures that the action is carried out whenever the condition holds true. Each rule in a genome has an associated energy cost that is required in order to activate it. A system is thus limited to a finite number of active rules at any given time which influences how it selects rules to activate. Selection is a probabilistic process determined by the entropy of the system. Whenever a rule becomes active, energy diffuses outward to adjacent rules in the genome, making them more likely to become active. This creates local stability wherein collections of nearby rules promote the activity of one another, leading the distinct operational "states" of the system.
