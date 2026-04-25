@@ -1,6 +1,4 @@
 {
-    "context": [],
-    
     "terminals": {"open": "(", "close": ")", "sep": " "},
 	
     "dtypes": {
@@ -134,7 +132,7 @@
             "input": ["boolean", "composite"]},
         {
             "id":    ",",
-            "name":  "sequence",
+            "name":  "set",
             "arity": [2,null],
             "dtype": "composite",
             "input": "composite"}]
